@@ -34,7 +34,7 @@ export const addVideo = async (formData: FormData) => {
     const title = formData.get("title") as string;
     const file = formData.get("video") as File | null;
 
-    const now = new Date();
+    const now = new Date(); //Pour être sûr que le titre de la vidéo est unique
     const uniqueTitle = `${title}_${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}_${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}`;
 
   
