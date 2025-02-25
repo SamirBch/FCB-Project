@@ -1,0 +1,26 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // ou "mysql" ou "sqlite" en fonction de ton choix de base de données
+  url      = env("DATABASE_URL")
+}
+
+model Video {
+  id          Int      @id @default(autoincrement()) // Identifiant unique
+  title       String   // Titre de la vidéo
+  url         String   // URL de la vidéo (utilisée pour l'accès au fichier stocké)
+  scorer      String   // Buteur
+  assist      String   // Passeur
+  matchDate   String   // Date du match
+  competition String   // Compétition
+  season      String   // Saison
+  team        String   // Équipe
+  minute      Int      // Minute du but
+  opponent    String   // Adversaire
+  finish      String   // Type de finition (ex: tête, pied, etc.)
+  
+  
+}
