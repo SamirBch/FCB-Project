@@ -33,14 +33,22 @@ export const addVideo = async (formData: FormData) => {
     "use server"; 
     const title = formData.get("title") as string;
     const file = formData.get("video") as File | null;
+
+    const now = new Date();
+    const uniqueTitle = `${title}_${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}_${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}`;
+
   
+   console.log("📝 Ajout d'une nouvelle vidéo :", uniqueTitle);
+  
+
     if (!file) {
       throw new Error("Aucune vidéo sélectionnée.");
     }
+
   
     // Vérifiez si une vidéo avec le même titre existe déjà
     const existingVideo = await db.video.findFirst({
-      where: { title: title },
+      where: { title: uniqueTitle },
     });
   
     if (existingVideo) {
@@ -50,7 +58,7 @@ export const addVideo = async (formData: FormData) => {
 
 
     const parsedData = videoSchema.parse({
-      title: title,                   //pcq j'utilise la variable title plus haut déjà donc autant l'utiliser
+      title: uniqueTitle,                   //pcq j'utilise la variable title plus haut déjà donc autant l'utiliser
       url: await saveVideo(file),
       scorer: formData.get("scorer") as string,
       assist: formData.get("assist") as string,
