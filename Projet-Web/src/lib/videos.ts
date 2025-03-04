@@ -25,6 +25,10 @@ const videoSchema = z.object({
 
 
 
+// Le type vidéo qui correspond au schéma
+export type Video = z.infer<typeof videoSchema>; // sa sert à obtenir la structure de "Video" à partir du schéma "videoSchema" afin de l'utilsier dans le signal dans ma UserPage. 
+//C'est pour éviter de répéter la structure de la vidéo dans plusieurs endroits du code
+
 
 
 
