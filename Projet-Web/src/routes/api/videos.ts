@@ -11,9 +11,12 @@ export async function GET(event: APIEvent) {
   const url = new URL(event.request.url);
   const season = url.searchParams.get("season") || "2024-2025"; // Saison par défaut
 
-  const [videos, stats] = await Promise.all([getVideos(), GetStats(season)]); // Passer la saison
+  const [videos, stats] = await Promise.all([getVideos(), GetStats(season)]);
+
   return new Response(JSON.stringify({ videos, stats }), { status: 200 });
-}// A la base je retournais juste les vidéos mais j'ai ajouté les stats aussi car qud je faisais dans un autre fichier api sa marchait pas
+}
+
+// A la base je retournais juste les vidéos mais j'ai ajouté les stats aussi car qud je faisais dans un autre fichier api sa marchait pas
 //J'ai rajouté APIEvent et URL pour la selection de la saison
 
 
