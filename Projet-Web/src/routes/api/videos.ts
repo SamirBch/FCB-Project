@@ -1,14 +1,20 @@
 import { addVideo, getVideos, removeVideo } from "~/lib/videos";
 //import { saveVideo } from "~/lib/storage"; 
 import type { APIEvent } from "@solidjs/start/server";
+import GetStats from "~/lib/stats";
 
 
 
 
 
-export async function GET() {
-  return await getVideos();
-}
+export async function GET(event: APIEvent) {
+  const url = new URL(event.request.url);
+  const season = url.searchParams.get("season") || "2024-2025"; // Saison par défaut
+
+  const [videos, stats] = await Promise.all([getVideos(), GetStats(season)]); // Passer la saison
+  return new Response(JSON.stringify({ videos, stats }), { status: 200 });
+}// A la base je retournais juste les vidéos mais j'ai ajouté les stats aussi car qud je faisais dans un autre fichier api sa marchait pas
+//J'ai rajouté APIEvent et URL pour la selection de la saison
 
 
 
