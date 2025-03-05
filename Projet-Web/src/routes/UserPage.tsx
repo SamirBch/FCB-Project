@@ -44,7 +44,7 @@ export default function UserPage() {
     <div class="min-h-screen bg-gradient-to-b from-black-900 to-blue-700 text-white p-6 relative">
       {/* Effet de flou en arrière-plan avec une opacité modérée */}
       <Show when={selectedVideo()}>
-        <div class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-md transition-opacity duration-300"></div>
+        <div class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-md transition-opacity duration-300 "></div>
       </Show>
 
       {/* Bouton pour afficher/masquer les filtres */}
