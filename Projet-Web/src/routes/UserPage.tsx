@@ -44,7 +44,7 @@ export default function UserPage() {
     <div class="min-h-screen bg-gradient-to-b from-black-900 to-blue-700 text-white p-6 relative">
       {/* Effet de flou en arrière-plan avec une opacité modérée */}
       <Show when={selectedVideo()}>
-        <div class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-md transition-opacity duration-300 "></div>
+        <div class="fixed inset-0 backdrop-blur-md transition-opacity duration-300"></div>
       </Show>
 
       {/* Bouton pour afficher/masquer les filtres */}
@@ -183,7 +183,7 @@ export default function UserPage() {
       {/* Onglet latéral pour afficher la vidéo sélectionnée */}
       <Show when={selectedVideo()}>
         <div
-          class="fixed top-0 left-0 w-96 h-full bg-white shadow-2xl p-6 overflow-y-auto transform transition-transform duration-300 ease-in-out"
+          class="fixed top-0 left-0 w-96 h-full bg-white shadow-2xl p-6 overflow-y-auto transform transition-transform duration-300 ease-in-out z-50"
           classList={{ "-translate-x-full": !selectedVideo(), "translate-x-0": !!selectedVideo() }}
         >
           {/* Bouton fermer avec un contraste noir-rouge et logo Barça */}

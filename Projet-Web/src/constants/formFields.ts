@@ -18,8 +18,18 @@ export const opponents = ["Real Madrid",
                         "Elche",
                         "Osasuna",
                         "Grenade",
-                        "Majorque"];
-
+                        "Majorque",
+                        "Benfica",
+                        "Gérone",
+                        "Rayo Vallecano",
+                        "Mallorca",
+                        "Espanyol",
+                        "Leganés",
+                        "Dortmund",
+                        "Bayern Munich",
+                        "Atalanta",
+                        "Inter Milan",
+                        "Young Boys"]
 
 
 export const finishs = ["tête",

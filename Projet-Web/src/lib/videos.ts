@@ -92,9 +92,14 @@ export const addVideo = async (formData: FormData) => {
 
 ////QUERY très important pour récupérer les vidéos de la base de données de manière dynamique
 
-export const getVideos = query(async () => {
+export const getVideos = query(async (filter?: Partial<z.infer<typeof videoSchema>>) => { //car on veut qu'une partie de la structure de la vidéo
   "use server";
-  return db.video.findMany(); // Récupère toutes les vidéos qui sont enregistrées dans la db
+  if (!filter) {
+    return db.video.findMany(); // Récupère toutes les vidéos qui sont enregistrées dans la db
+  } else {
+    filter = videoSchema.partial().parse(filter); // Valide les données du filtre
+    return db.video.findMany({ where: filter});
+  } // Récupère toutes les vidéos qui sont enregistrées dans la db
 }, 'getVideos');
 
 
