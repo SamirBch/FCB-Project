@@ -1,4 +1,3 @@
-// components/FormField.tsx
 import { Component } from "solid-js";
 
 type FormFieldProps = {
