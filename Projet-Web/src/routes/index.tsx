@@ -1,5 +1,5 @@
 import { Navigate } from "@solidjs/router";
 
 export default function IndexPage() {
-  return <Navigate href="/UserPage" />;
+  return <Navigate href="/RegisterPage" />;
 }

@@ -90,7 +90,7 @@ export const addVideo = async (formData: FormData) => {
 
 
 
-////QUERY très important pour récupérer les vidéos de la base de données de manière dynamique
+////QUERY très important pour récupérer les vidéos de la base de données de manière dynamique, car sa met en cache
 
 export const getVideos = query(async (filter?: Partial<z.infer<typeof videoSchema>>) => { //car on veut qu'une partie de la structure de la vidéo
   "use server";

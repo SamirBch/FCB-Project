@@ -42,8 +42,46 @@ export default function UserPage() {
 
   return (
     <div class="min-h-screen bg-gradient-to-b from-black-900 to-blue-700 text-white p-6 relative">
+      {/* Fond flou lorsque l'onglet est ouvert */}
       <Show when={selectedVideo()}>
-        <div class="fixed inset-0 backdrop-blur-md transition-opacity duration-300"></div>
+        <div class="fixed inset-0 backdrop-blur-md transition-opacity duration-300 z-40"></div>
+      </Show>
+
+      {/* Onglet latéral pour afficher la vidéo sélectionnée */}
+      <Show when={selectedVideo()}>
+        <div
+          class="fixed top-0 left-0 w-96 h-full bg-white shadow-2xl p-6 overflow-y-auto transform transition-transform duration-300 ease-in-out z-50"
+          classList={{ "-translate-x-full": !selectedVideo(), "translate-x-0": !!selectedVideo() }}
+        >
+          {/* Bouton fermer avec un contraste noir-rouge et logo Barça */}
+          <button
+            class="absolute top-4 right-4 bg-black text-white font-bold py-2 px-4 rounded-full hover:bg-red-600 transition flex items-center space-x-2"
+            onClick={() => setSelectedVideo(null)}
+          >
+            <span>❌</span>
+          </button>
+
+          {/* Titre de la vidéo */}
+          <h3 class="text-2xl font-bold text-black mb-4">{selectedVideo()?.title}</h3>
+
+          {/* Affichage de la vidéo */}
+          <video controls class="w-full rounded-lg shadow-lg">
+            <source src={selectedVideo()?.url} type="video/mp4" />
+            Votre navigateur ne supporte pas la lecture de vidéos.
+          </video>
+
+          {/* Détails de la vidéo */}
+          <div class="mt-4 text-gray-900 space-y-2">
+            <p>⚽ <b>Buteur :</b> {selectedVideo()?.scorer}</p>
+            <p>🅰️ <b>Passeur :</b> {selectedVideo()?.assist}</p>
+            <p>🆚 <b>Adversaire :</b> {selectedVideo()?.opponent}</p>
+            <p>🏆 <b>Compétition :</b> {selectedVideo()?.competition}</p>
+            <p>📅 <b>Date :</b> {selectedVideo()?.matchDate}</p>
+            <p>⏱️ <b>Minute :</b> {selectedVideo()?.minute}</p>
+            <p>🥅 <b>Finition :</b> {selectedVideo()?.finish}</p>
+            <p>📅 <b>Saison :</b> {selectedVideo()?.season}</p>
+          </div>
+        </div>
       </Show>
 
       <button
