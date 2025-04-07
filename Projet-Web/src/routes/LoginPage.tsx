@@ -20,14 +20,17 @@ export default function LoginPage() {
       body: formData,
     });
 
-    const result = await response.json();
+    const result = await response.json(); 
     console.log(result);
     if (result.success) {
-      
-      
-      navigate("/UserPage"); // 🔄 Redirige vers la page désirée
+      // Rediriger en fonction du rôle
+      if (result.role === "admin") {
+        navigate("/AdminPage"); // Redirige vers la page admin
+      } else {
+        navigate("/UserPage"); // Redirige vers la page utilisateur
+      }
     } else {
-      setError(result.message);
+      setError(result.message || "Erreur lors de la connexion");
     }
   }
 

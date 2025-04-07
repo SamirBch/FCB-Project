@@ -5,6 +5,7 @@ export default function RegisterPage() {
   const [email, setEmail] = createSignal("");
   const [login, setLogin] = createSignal("");
   const [password, setPassword] = createSignal("");
+  const [adminKey, setAdminKey] = createSignal(""); // Signal pour la clé admin
   const [error, setError] = createSignal("");
   const [success, setSuccess] = createSignal("");
   const navigate = useNavigate(); // Pour rediriger après inscription
@@ -18,6 +19,8 @@ export default function RegisterPage() {
     formData.append("email", email());
    
     formData.append("password", password());
+    formData.append("adminKey", adminKey()); // Ajouter la clé admin au formulaire
+
 
     const response = await fetch("/api/register", {
       method: "POST",
@@ -61,6 +64,16 @@ export default function RegisterPage() {
             value={password()}
             onInput={(e) => setPassword(e.currentTarget.value)}
             required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1 text-gray-700">Clé admin (optionnel)</label>
+          <input
+            type="text"
+            class="border border-gray-300 rounded-lg p-2 w-full bg-gray-50 text-gray-900 focus:ring focus:ring-blue-400 focus:border-blue-500"
+            value={adminKey()}
+            onInput={(e) => setAdminKey(e.currentTarget.value)}
           />
         </div>
 
