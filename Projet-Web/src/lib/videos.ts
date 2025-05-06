@@ -10,6 +10,8 @@ import { saveVideo } from "./storage";
 // 📌 Schéma de validation des vidéos
 //Va permettre de valider les données du formulaire avant de les parser donc avant de les envoyer à la base de données!!!!
 const videoSchema = z.object({
+
+  id: z.number(),
   title: z.string(),
   url: z.string(),
   scorer: z.string(),
@@ -21,6 +23,8 @@ const videoSchema = z.object({
   minute: z.number(),
   opponent: z.string(),
   finish: z.string(),
+  favorites: z.array(z.object({ userId: z.number() })).optional(), // Relation avec les favoris
+  
 });
 
 
@@ -78,7 +82,14 @@ export const addVideo = async (formData: FormData) => {
 
     
     try {
-      const video = await db.video.create({ data: parsedData });
+      const video = await db.video.create({ 
+        data: {
+          ...parsedData,
+          favorites: parsedData.favorites
+            ? { create: parsedData.favorites }
+            : undefined,
+        },
+      });
       console.log("✅ Vidéo ajoutée dans la base de données :", video);
       return video;
     } catch (error) {
@@ -98,7 +109,14 @@ export const getVideos = query(async (filter?: Partial<z.infer<typeof videoSchem
     return db.video.findMany(); // Récupère toutes les vidéos qui sont enregistrées dans la db
   } else {
     filter = videoSchema.partial().parse(filter); // Valide les données du filtre
-    return db.video.findMany({ where: filter});
+    return db.video.findMany({ 
+        where: {
+            ...filter,
+            favorites: filter.favorites
+                ? { some: { userId: { in: filter.favorites.map(fav => fav.userId) } } }
+                : undefined,
+        },
+    });
   } // Récupère toutes les vidéos qui sont enregistrées dans la db
 }, 'getVideos');
 
@@ -112,11 +130,17 @@ export const removeVideo = async (id: number) => {
     // Récupérer la vidéo depuis la base de données
     const video = await db.video.findUnique({
       where: { id: id }, // Vérifie bien que id est un nombre valide
+      include: { favorites: true }, // Inclure les favoris associés
     });
   
     if (!video) {
       throw new Error("Vidéo non trouvée.");
     }
+
+    // Supprimer les favoris associés
+    await db.favorite.deleteMany({
+    where: { videoId: id },
+  });
   
     // 📌 Supprimer le fichier vidéo du dossier
     const filePath = path.join(process.cwd(), "public", video.url); // Chemin absolu du fichier

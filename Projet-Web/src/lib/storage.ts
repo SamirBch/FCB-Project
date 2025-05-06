@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 
 export async function saveVideo(file: File): Promise<string> { //renvoie une promesse de string en prenant un file de type File en paramètre
+  'use server'
   const uploadsDir = path.join(process.cwd(), "public/uploads"); //définit le chemin du dossier uploads en partant du dossier courant
 
   if (!fs.existsSync(uploadsDir)) { //si le dossier n'existe pas
